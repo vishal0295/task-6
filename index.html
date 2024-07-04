@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .gallery {
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-gap: 10px;
+      max-width: 100%;
+      padding: 10px;
+    }
+
+    .gallery-item {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .lightbox-content {
+      display: block;
+      margin: auto;
+      max-width: 90%;
+      max-height: 80%;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="gallery">
+    <img src="https://envato-shoebox-0.imgix.net/91da/ad2a-e65d-4c27-a685-5e58108ee243/20161027_0897.jpg?auto=compress%2Cformat&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&w=1000&fit=max&markalign=center%2Cmiddle&markalpha=18&s=db36594daed72f7db65eabec71a7fd7b" alt="Image 1" class="gallery-item">
+    <img src="https://envato-shoebox-0.imgix.net/31c6/2c52-ab75-4e76-98ef-878112ee70d4/LAD_7973.JPG?auto=compress%2Cformat&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&w=1000&fit=max&markalign=center%2Cmiddle&markalpha=18&s=fc3840e8d2c638eecb8cdd2773964e39" alt="Image 2" class="gallery-item">
+    <img src="https://envato-shoebox-0.imgix.net/566d/7bd8-9100-11e4-b32a-b8ca3a6774f8/Golitha+Falls+046SM%283%29.jpg?auto=compress%2Cformat&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&w=1000&fit=max&markalign=center%2Cmiddle&markalpha=18&s=dfd6ac5658600fc968263b61370a8ea5" alt="Image 3" class="gallery-item">
+    <img src="https://envato-shoebox-0.imgix.net/d6c0/de0d-74c5-41c7-9a5e-c5479ecb3199/surin+workshop+2018-612.jpg?auto=compress%2Cformat&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&w=1000&fit=max&markalign=center%2Cmiddle&markalpha=18&s=d6eca4055d0020a45eee13c18fb05b0a" alt="Image 4" class="gallery-item">
+    <img src="https://envato-shoebox-0.imgix.net/c1eb/ab06-c28c-4414-8550-5240cddb223a/AMG07691_2.jpg?auto=compress%2Cformat&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&w=1000&fit=max&markalign=center%2Cmiddle&markalpha=18&s=58a19ae7827396a3f0f140c71213f6b1" alt="Image 5" class="gallery-item">
+    <img src="https://envato-shoebox-0.imgix.net/b514/50d9-1492-40e5-8831-076b9d7314c1/0k5gJHbn3lYf2riaxte7ZIfJ8y45dv2APJ5m1rwW.jpg?auto=compress%2Cformat&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&w=1000&fit=max&markalign=center%2Cmiddle&markalpha=18&s=26d167c03c7e4e77a7a2c442b2a0d43c" alt="Image 6" class="gallery-item">
+    <img src="https://static.toiimg.com/photo/msid-103053443,width-96,height-65.cms" alt="Image 7" class="gallery-item">
+    <img src="https://i.insider.com/5ab921ea095b1142028b45d8?width=800&format=jpeg&auto=webp" alt="Image 8" class="gallery-item">
+    <!-- Add more images as needed -->
+  </div>
+
+  <!-- Modal for lightbox -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <span class="close">&times;</span>
+    <img class="lightbox-content" id="lightbox-image">
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var galleryItems = document.querySelectorAll('.gallery-item');
+      var modal = document.getElementById('lightbox-modal');
+      var modalImg = document.getElementById('lightbox-image');
+      var closeModal = document.querySelector('.close');
+
+      galleryItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+          modal.style.display = 'block';
+          modalImg.src = this.src;
+        });
+      });
+
+      closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+
+      modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
